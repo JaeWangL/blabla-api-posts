@@ -1,0 +1,32 @@
+server:
+  port: 0
+
+app:
+  config:
+    host: ${env.CONFIG_SERVICE_HOST}
+    port: ${env.CONFIG_SERVICE_PORT}
+    user: ${env.CONFIG_SERVICE_USER}
+    password: ${env.CONFIG_SERVICE_PASSWORD}
+
+spring:
+  application:
+    name: posts-api
+  cloud:
+    config:
+      uri: http://${app.config.host}:${app.config.port}
+      fail-fast: true
+      username: ${app.config.user}
+      password: ${app.config.password}
+      retry:
+        max-attempts: 10
+        max-interval: 15000
+        initial-interval: 10000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server.port: 8080
+

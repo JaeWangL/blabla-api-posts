@@ -1,0 +1,5 @@
+rootProject.name = 'posts'
+include 'posts-common'
+include 'posts-api'
+
+
