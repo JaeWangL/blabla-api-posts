@@ -1,26 +1,34 @@
 package com.blabla.posts.api.domain.aggregatesmodel.post;
 
 import com.blabla.posts.api.domain.aggregatesmodel.post.snapshot.PostSnapshot;
+import com.blabla.posts.api.domain.aggregatesmodel.writer.WriterId;
 import com.blabla.posts.api.domain.events.PostCreatedDomainEvent;
 import com.blabla.posts.api.domain.seedwork.AggregateRoot;
 import com.github.ksuid.Ksuid;
 import java.util.Objects;
+import lombok.Getter;
 import org.springframework.lang.NonNull;
 
 public class Post extends AggregateRoot<PostId> {
+    private final WriterId writerId;
     private final Location location;
+    @Getter
     private final String title;
+    @Getter
     private final String contents;
+    @Getter
     private final Thumbnail thumbnail;
 
     private Post(
         @NonNull PostId postId,
+        @NonNull WriterId writerId,
         @NonNull Location location,
         @NonNull String title,
         @NonNull String contents,
         Thumbnail thumbnail
     ) {
         this.id = Objects.requireNonNull(postId, "Post id cannot be null");
+        this.writerId = Objects.requireNonNull(writerId, "Writer id cannot be null");
         this.location = Objects.requireNonNull(location, "Location cannot be null");
         this.title = Objects.requireNonNull(title, "Title cannot be null");
         this.contents = Objects.requireNonNull(contents, "Contents cannot be null");
@@ -28,22 +36,16 @@ public class Post extends AggregateRoot<PostId> {
     }
 
     @NonNull
-    public static Post create(@NonNull NewPostData newData) {
-        Objects.requireNonNull(newData, "New post data cannot be null");
-        var newDomain = new Post(PostId.of(Ksuid.newKsuid().toString()), newData.getLocation(), newData.getTitle(), newData.getContents(), newData.getThumbnail());
-
-        newDomain.addPostCreatedDomainEvent(newData);
-        return newDomain;
-    }
-
-    @NonNull
     @Override
     public PostSnapshot snapshot() {
         return PostSnapshot.builder()
             .id(id.getValue())
+            .writerId(writerId.getValue())
+            .latitude(location.getLatitude())
+            .longitude(location.getLongitude())
             .country(location.getCountry())
-            .city(location.getCity())
             .state(location.getState())
+            .city(location.getCity())
             .street(location.getStreet())
             .detailAddress(location.getDetailAddress())
             .zipCode(location.getZipCode())
@@ -60,10 +62,13 @@ public class Post extends AggregateRoot<PostId> {
         Objects.requireNonNull(snapshot, "Snapshot cannot be null");
         return new Post(
             PostId.of(snapshot.getId()),
+            WriterId.of(snapshot.getWriterId()),
             Location.builder()
+                .latitude(snapshot.getLatitude())
+                .longitude(snapshot.getLongitude())
                 .country(snapshot.getCountry())
-                .city(snapshot.getCity())
                 .state(snapshot.getState())
+                .city(snapshot.getCity())
                 .street(snapshot.getStreet())
                 .detailAddress(snapshot.getDetailAddress())
                 .zipCode(snapshot.getZipCode())
@@ -76,6 +81,15 @@ public class Post extends AggregateRoot<PostId> {
                 .originalFileName(snapshot.getOriginalFileName())
                 .build()
         );
+    }
+
+    @NonNull
+    public static Post create(@NonNull NewPostData newData) {
+        Objects.requireNonNull(newData, "New post data cannot be null");
+        var newDomain = new Post(PostId.of(Ksuid.newKsuid().toString()), newData.getWriterId(), newData.getLocation(), newData.getTitle(), newData.getContents(), newData.getThumbnail());
+
+        newDomain.addPostCreatedDomainEvent(newData);
+        return newDomain;
     }
 
     private void addPostCreatedDomainEvent(NewPostData newData) {

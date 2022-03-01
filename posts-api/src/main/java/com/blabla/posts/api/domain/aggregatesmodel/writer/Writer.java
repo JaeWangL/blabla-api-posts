@@ -1,5 +1,8 @@
 package com.blabla.posts.api.domain.aggregatesmodel.writer;
 
+import com.blabla.posts.api.domain.aggregatesmodel.post.NewPostData;
+import com.blabla.posts.api.domain.aggregatesmodel.post.Post;
+import com.blabla.posts.api.domain.aggregatesmodel.post.PostId;
 import com.blabla.posts.api.domain.aggregatesmodel.writer.snapshot.WriterSnapshot;
 import com.blabla.posts.api.domain.seedwork.AggregateRoot;
 import com.github.ksuid.Ksuid;
@@ -19,10 +22,6 @@ public class Writer extends AggregateRoot<WriterId> {
         this.device = Objects.requireNonNull(device, "Device Info cannot be null");
     }
 
-    public Writer(@NonNull DeviceInfo device) {
-        this(WriterId.of(Ksuid.newKsuid().toString()), device);
-    }
-
     @NonNull
     @Override
     public WriterSnapshot snapshot() {
@@ -40,5 +39,12 @@ public class Writer extends AggregateRoot<WriterId> {
             WriterId.of(snapshot.getId()),
             DeviceInfo.of(DeviceType.of(snapshot.getDeviceType()), snapshot.getDeviceId())
         );
+    }
+
+    @NonNull
+    public static Writer create(@NonNull NewWriterData newData) {
+        Objects.requireNonNull(newData, "New writer data cannot be null");
+
+        return new Writer(newData.getWriterId(), newData.getDevice());
     }
 }

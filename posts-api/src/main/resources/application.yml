@@ -20,6 +20,16 @@ logging:
     web: INFO
     root: INFO
 
+# Swagger
+springdoc:
+    swagger-ui:
+        path: /api-swagger.html
+        display-request-duration: true
+        groups-order: DESC
+        operationsSorter: method
+        disable-swagger-default-url: true
+    show-actuator: false
+
 ---
 spring:
   config:

@@ -2,6 +2,7 @@ package com.blabla.posts.common.outbox;
 
 import com.blabla.posts.common.eventhandling.IntegrationEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.ksuid.Ksuid;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,9 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class IntegrationEventLogEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private UUID eventId;
+    private String id;
+    private String eventId;
     private LocalDateTime creationTime;
     private String eventTypeName;
     private String content;
@@ -31,6 +31,7 @@ public class IntegrationEventLogEntry {
     private IntegrationEvent event;
 
     IntegrationEventLogEntry(IntegrationEvent event, String content, String topic) throws JsonProcessingException {
+        id = Ksuid.newKsuid().toString();
         eventId = event.getId();
         creationTime = LocalDateTime.now();
         eventTypeName = event.getClass().getName();

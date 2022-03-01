@@ -24,9 +24,9 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     runtimeOnly 'mysql:mysql-connector-java'
 
+    // Command bus
+    implementation 'net.sizovs:pipelinr:0.7'
+
     // Swagger
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
-
-    // Utils
-    implementation 'com.github.ksuid:ksuid:1.1.0'
 }

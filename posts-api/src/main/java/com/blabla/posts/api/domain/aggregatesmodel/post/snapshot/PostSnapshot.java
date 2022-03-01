@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class PostSnapshot implements Snapshot {
     private final String id;
+    private final String writerId;
     private final BigDecimal latitude;
     private final BigDecimal longitude;
     private final String country;
