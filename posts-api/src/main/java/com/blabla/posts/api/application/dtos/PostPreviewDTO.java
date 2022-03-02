@@ -1,27 +1,34 @@
 package com.blabla.posts.api.application.dtos;
 
-import com.blabla.posts.api.domain.aggregatesmodel.post.Post;
 import com.blabla.posts.common.utils.ContentsUtils;
 import com.blabla.posts.common.utils.FileUrlUtils;
+import java.util.Date;
+import lombok.NonNull;
 
 public record PostPreviewDTO(
-    String id,
-    String title,
-    String contentsSnippet,
-    String thumbnailUrl
+    @NonNull String id,
+    @NonNull String title,
+    @NonNull String contentsSnippet,
+    String thumbnailUrl,
+    @NonNull Date createdAt,
+    @NonNull Date updatedAt
 ) {
     public static PostPreviewDTO fromParameters(
-        String id,
-        String title,
-        String contents,
+        @NonNull String id,
+        @NonNull String title,
+        @NonNull String contents,
         String thumbnailDomain,
-        String thumbnailBlobFileName
+        String thumbnailBlobFileName,
+        @NonNull Date createdAt,
+        @NonNull Date updatedAt
     ) {
         return new PostPreviewDTO(
             id,
             title,
             ContentsUtils.getSnippetByContents(contents),
-            FileUrlUtils.getUrlByDomainAndFilename(thumbnailDomain, thumbnailBlobFileName)
+            FileUrlUtils.getUrlByDomainAndFilename(thumbnailDomain, thumbnailBlobFileName),
+            createdAt,
+            updatedAt
         );
     }
 }

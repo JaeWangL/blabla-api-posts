@@ -17,13 +17,13 @@ public class PostQueriesImpl implements PostQueries {
     @Override
     public List<PostPreviewDTO> getPostsByDistance(BigDecimal currentLatitude, BigDecimal currentLongitude, double distanceInKm, Integer pageSize, Integer pageIndex) {
         var query = entityManager.createNativeQuery("""
-        SELECT id, latitude, longitude, title, contents, thumbnail_domain, thumbnail_blob_filename, created_at, distance
+        SELECT id, latitude, longitude, title, contents, thumbnail_domain, thumbnail_blob_filename, created_at, updated_at, distance
         FROM (
             SELECT z.id,
                    z.latitude, z.longitude,
                    z.title, z.contents,
                    z.thumbnail_domain, z.thumbnail_blob_filename,
-                   z.created_at,
+                   z.created_at, z.updated_at,
                    p.radius,
                    p.distance_unit
                        * DEGREES(ACOS(LEAST(1.0, COS(RADIANS(p.latpoint))
@@ -64,13 +64,16 @@ public class PostQueriesImpl implements PostQueries {
                 var thumbnailDomain = (String) r[5];
                 var thumbnailBlobFileName = (String) r[6];
                 var createdAt = (Date) r[7];
+                var updatedAt = (Date) r[8];
 
                 return PostPreviewDTO.fromParameters(
                     id,
                     title,
                     contents,
                     thumbnailDomain,
-                    thumbnailBlobFileName
+                    thumbnailBlobFileName,
+                    createdAt,
+                    updatedAt
                 );
             }).collect(Collectors.toList());
     }
