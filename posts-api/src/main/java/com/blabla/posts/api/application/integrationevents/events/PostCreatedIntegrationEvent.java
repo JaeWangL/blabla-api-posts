@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class PostCreatedIntegrationEvent extends IntegrationEvent {
     private BigDecimal latitude;
     private BigDecimal longitude;
+    private String title;
 }

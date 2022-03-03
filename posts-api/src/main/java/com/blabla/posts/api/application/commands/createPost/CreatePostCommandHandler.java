@@ -37,7 +37,7 @@ public class CreatePostCommandHandler implements Command.Handler<CreatePostComma
     @Override
     public PostCreatedDTO handle(CreatePostCommand command) {
         // Add Integration event to notifying new post
-        eventLogService.saveEvent(new PostCreatedIntegrationEvent(command.latitude(), command.longitude()), topics.getCreatedPosts());
+        eventLogService.saveEvent(new PostCreatedIntegrationEvent(command.latitude(), command.longitude(), command.title()), topics.getCreatedPosts());
 
         final var writerId = WriterId.of(Ksuid.newKsuid().toString());
         final var writer = createWriter(writerId, command.deviceType(), command.deviceId());

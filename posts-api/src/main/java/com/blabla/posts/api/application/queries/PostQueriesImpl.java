@@ -68,6 +68,8 @@ public class PostQueriesImpl implements PostQueries {
 
                 return PostPreviewDTO.fromParameters(
                     id,
+                    latitude,
+                    longitude,
                     title,
                     contents,
                     thumbnailDomain,
