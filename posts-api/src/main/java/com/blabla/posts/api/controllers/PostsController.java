@@ -2,11 +2,10 @@ package com.blabla.posts.api.controllers;
 
 import com.blabla.posts.api.application.commands.createPost.CreatePostCommand;
 import com.blabla.posts.api.application.dtos.PostCreatedDTO;
+import com.blabla.posts.api.application.dtos.PostDetailDTO;
 import com.blabla.posts.api.application.dtos.PostPreviewDTO;
 import com.blabla.posts.api.application.infrastructure.commandbus.CommandBus;
 import com.blabla.posts.api.application.queries.PostQueries;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +29,11 @@ public class PostsController {
         @RequestBody @Valid CreatePostCommand command
     ) {
         return ResponseEntity.ok(commandBus.send(command));
+    }
+
+    @GetMapping(value = "id/{id}")
+    public ResponseEntity<PostDetailDTO> getPostById(@PathVariable String id) {
+        return ResponseEntity.ok(postQueries.getPostById(id));
     }
 
     @GetMapping(value = "by/distance/latitude/{currentLatitude}/longitude/{currentLongitude}")

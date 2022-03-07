@@ -1,6 +1,9 @@
 package com.blabla.posts.api.application.queries;
 
+import com.blabla.posts.api.application.dtos.PostDetailDTO;
 import com.blabla.posts.api.application.dtos.PostPreviewDTO;
+import com.blabla.posts.api.infrastructure.repositories.PostEntityRepository;
+import com.blabla.posts.common.rest.error.NotFoundException;
 import com.blabla.posts.common.shared.QueryHandler;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +16,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostQueriesImpl implements PostQueries {
     private final EntityManager entityManager;
+    private final PostEntityRepository entityRepo;
+
+    @Override
+    public PostDetailDTO getPostById(String id) {
+        return entityRepo.findById(id).map(
+            PostDetailDTO::fromEntity
+        ).orElseThrow(() -> new NotFoundException("Post not found id: %s".formatted(id)));
+    }
 
     @Override
     public List<PostPreviewDTO> getPostsByDistance(BigDecimal currentLatitude, BigDecimal currentLongitude, double distanceInKm, Integer pageSize, Integer pageIndex) {
