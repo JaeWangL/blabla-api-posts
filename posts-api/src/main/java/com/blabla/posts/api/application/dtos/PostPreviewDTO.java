@@ -13,7 +13,7 @@ public record PostPreviewDTO(
     @NonNull String title,
     @NonNull String contentsSnippet,
     String thumbnailUrl,
-    @NonNull Double distanceKm,
+    @NonNull Long distanceM,
     @NonNull Integer joinedUsers,
     @NonNull Date createdAt,
     @NonNull Date updatedAt
@@ -26,7 +26,7 @@ public record PostPreviewDTO(
         @NonNull String contents,
         String thumbnailDomain,
         String thumbnailBlobFileName,
-        @NonNull Double distanceKm,
+        @NonNull Long distanceM,
         @NonNull Integer joinedUsers,
         @NonNull Date createdAt,
         @NonNull Date updatedAt
@@ -38,7 +38,7 @@ public record PostPreviewDTO(
             title,
             ContentsUtils.getSnippetByContents(contents),
             FileUrlUtils.getUrlByDomainAndFilename(thumbnailDomain, thumbnailBlobFileName),
-            distanceKm,
+            distanceM,
             joinedUsers,
             createdAt,
             updatedAt
