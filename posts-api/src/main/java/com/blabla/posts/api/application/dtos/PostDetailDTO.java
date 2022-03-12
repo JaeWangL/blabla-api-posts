@@ -13,6 +13,7 @@ public record PostDetailDTO(
     @NonNull String title,
     @NonNull String contents,
     String thumbnailUrl,
+    @NonNull Integer joinedUsers,
     @NonNull Date createdAt,
     @NonNull Date updatedAt
 ) {
@@ -24,6 +25,7 @@ public record PostDetailDTO(
             entity.getTitle(),
             entity.getContents(),
             FileUrlUtils.getUrlByDomainAndFilename(entity.getThumbnail().getThumbnailDomain(), entity.getThumbnail().getBlobFileName()),
+            entity.getJoinedUsers(),
             entity.getCreatedAt(),
             entity.getUpdatedAt()
         );

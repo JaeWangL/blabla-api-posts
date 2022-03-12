@@ -88,7 +88,7 @@ public class PostQueriesImpl implements PostQueries {
                     contents,
                     thumbnailDomain,
                     thumbnailBlobFileName,
-                    distance,
+                    Math.round(distance * 1000),
                     joinedUsers,
                     createdAt,
                     updatedAt
