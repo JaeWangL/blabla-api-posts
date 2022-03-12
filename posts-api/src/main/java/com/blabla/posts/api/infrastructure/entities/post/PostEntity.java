@@ -1,6 +1,7 @@
 package com.blabla.posts.api.infrastructure.entities.post;
 
 import com.blabla.posts.api.infrastructure.entities.BaseEntity;
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,7 @@ public class PostEntity extends BaseEntity {
 
     @Embedded
     private ThumbnailModel thumbnail;
+
+    @Column(name = "joined_users", nullable = false, columnDefinition = "int(11) default 0")
+    private Integer joinedUsers;
 }

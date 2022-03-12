@@ -18,6 +18,7 @@ public class Post extends AggregateRoot<PostId> {
     private final String contents;
     @Getter
     private final Thumbnail thumbnail;
+    private final Integer joinedUsers;
 
     private Post(
         @NonNull PostId postId,
@@ -25,7 +26,8 @@ public class Post extends AggregateRoot<PostId> {
         @NonNull Location location,
         @NonNull String title,
         @NonNull String contents,
-        Thumbnail thumbnail
+        Thumbnail thumbnail,
+        Integer joinedUsers
     ) {
         this.id = Objects.requireNonNull(postId, "Post id cannot be null");
         this.writerId = Objects.requireNonNull(writerId, "Writer id cannot be null");
@@ -33,6 +35,7 @@ public class Post extends AggregateRoot<PostId> {
         this.title = Objects.requireNonNull(title, "Title cannot be null");
         this.contents = Objects.requireNonNull(contents, "Contents cannot be null");
         this.thumbnail = thumbnail;
+        this.joinedUsers = joinedUsers;
     }
 
     @NonNull
@@ -54,6 +57,7 @@ public class Post extends AggregateRoot<PostId> {
             .thumbnailDomain(thumbnail.getThumbnailDomain())
             .blobFileName(thumbnail.getBlobFileName())
             .originalFileName(thumbnail.getOriginalFileName())
+            .joinedUsers(joinedUsers)
             .build();
     }
 
@@ -79,14 +83,15 @@ public class Post extends AggregateRoot<PostId> {
                 .thumbnailDomain(snapshot.getThumbnailDomain())
                 .blobFileName(snapshot.getBlobFileName())
                 .originalFileName(snapshot.getOriginalFileName())
-                .build()
+                .build(),
+            snapshot.getJoinedUsers()
         );
     }
 
     @NonNull
     public static Post create(@NonNull NewPostData newData) {
         Objects.requireNonNull(newData, "New post data cannot be null");
-        var newDomain = new Post(PostId.of(Ksuid.newKsuid().toString()), newData.getWriterId(), newData.getLocation(), newData.getTitle(), newData.getContents(), newData.getThumbnail());
+        var newDomain = new Post(PostId.of(Ksuid.newKsuid().toString()), newData.getWriterId(), newData.getLocation(), newData.getTitle(), newData.getContents(), newData.getThumbnail(), 0);
 
         newDomain.addPostCreatedDomainEvent(newData);
         return newDomain;

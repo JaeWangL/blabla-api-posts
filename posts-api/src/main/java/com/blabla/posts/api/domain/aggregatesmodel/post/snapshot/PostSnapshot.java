@@ -23,4 +23,5 @@ public class PostSnapshot implements Snapshot {
     private final String thumbnailDomain;
     private final String blobFileName;
     private final String originalFileName;
+    private final Integer joinedUsers;
 }
