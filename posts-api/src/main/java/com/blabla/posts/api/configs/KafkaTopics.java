@@ -11,4 +11,6 @@ import org.springframework.stereotype.Component;
 @RefreshScope
 public class KafkaTopics {
     private String createdPosts;
+    private String joinedRoomMember;
+    private String leavedRoomMember;
 }

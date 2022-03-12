@@ -18,7 +18,7 @@ public class Post extends AggregateRoot<PostId> {
     private final String contents;
     @Getter
     private final Thumbnail thumbnail;
-    private final Integer joinedUsers;
+    private Integer joinedUsers;
 
     private Post(
         @NonNull PostId postId,
@@ -95,6 +95,10 @@ public class Post extends AggregateRoot<PostId> {
 
         newDomain.addPostCreatedDomainEvent(newData);
         return newDomain;
+    }
+
+    public void changeJoinedMember(@NonNull Integer newMemberCount) {
+        this.joinedUsers = newMemberCount;
     }
 
     private void addPostCreatedDomainEvent(NewPostData newData) {
