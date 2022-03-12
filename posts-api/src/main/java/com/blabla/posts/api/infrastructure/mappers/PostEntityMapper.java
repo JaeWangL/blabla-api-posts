@@ -34,6 +34,7 @@ public class PostEntityMapper implements EntityMapper<PostEntity, Post> {
                 .blobFileName(snapshot.getBlobFileName() != null ? snapshot.getBlobFileName() : "")
                 .originalFileName(snapshot.getOriginalFileName() != null ? snapshot.getOriginalFileName() : "")
                 .build())
+            .joinedUsers(snapshot.getJoinedUsers())
             .build();
     }
 
@@ -55,6 +56,7 @@ public class PostEntityMapper implements EntityMapper<PostEntity, Post> {
             .thumbnailDomain(!isEmpty(entity.getThumbnail().getThumbnailDomain()) ? entity.getThumbnail().getThumbnailDomain() : null)
             .blobFileName(!isEmpty(entity.getThumbnail().getBlobFileName()) ? entity.getThumbnail().getBlobFileName() : null)
             .originalFileName(!isEmpty(entity.getThumbnail().getOriginalFileName()) ? entity.getThumbnail().getOriginalFileName() : null)
+            .joinedUsers(entity.getJoinedUsers())
             .build());
     }
 }
