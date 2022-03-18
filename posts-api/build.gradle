@@ -1,3 +1,8 @@
+plugins {
+    id "com.microsoft.azure.azurewebapp" version "1.3.0"
+    id "com.google.cloud.tools.jib" version "3.2.0"
+}
+
 bootJar {
     destinationDirectory.set(file("$projectDir"))
     archiveFileName = "app.jar"
@@ -6,6 +11,24 @@ bootJar {
 azurewebapp {
     resourceGroup = 'smartgeo-test'
     appName = 'BlaBlaPosts'
+}
+
+jib {
+    from {
+        image='mcr.microsoft.com/java/jre:17-zulu-alpine'
+    }
+    to {
+        image="${dockerPrefix}/posts-api"
+        tags=['latest']
+    }
+    container {
+        mainClass='com.blabla.posts.api.PostsApiApplication'
+        creationTime='USE_CURRENT_TIMESTAMP'
+        jvmFlags = ['-Dspring.profiles.active=prod', '-Dserver.port=8080', '-Dfile.encoding=UTF-8']
+        ports = ['8080']
+        entrypoint=['java', '-jar', '/app.jar']
+        labels = [maintainer: "JaeWang Lee <jnso5072@outlook.kr>"]
+    }
 }
 
 dependencies {

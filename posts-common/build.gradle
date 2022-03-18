@@ -3,6 +3,8 @@ bootJar {
 }
 jar {
     enabled = true
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }
 
 dependencies {
