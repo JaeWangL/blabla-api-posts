@@ -18,7 +18,7 @@ jib {
         image='mcr.microsoft.com/java/jre:17-zulu-alpine'
     }
     to {
-        image="${dockerPrefix}/posts-api"
+        image="${dockerPrefix}/${project.name}/${project.version.toString().toLowerCase()}"
         tags=['latest']
     }
     container {
