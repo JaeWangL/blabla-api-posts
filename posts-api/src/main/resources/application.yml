@@ -34,20 +34,7 @@ springdoc:
 spring:
   config:
     activate:
-      on-profile: dev
-
-  # JPA
-  jpa:
-    show-sql: false
-
-  flyway:
-    locations: classpath:db/migration, classpath:db/testdata
-
----
-spring:
-  config:
-    activate:
       on-profile: prod
 
   flyway:
-    locations: classpath:db/migration, classpath:db/testdata
+    enabled: false

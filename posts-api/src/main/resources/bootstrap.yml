@@ -3,10 +3,10 @@ server:
 
 app:
   config:
-    host: ${env.CONFIG_SERVICE_HOST}
-    port: ${env.CONFIG_SERVICE_PORT}
-    user: ${env.CONFIG_SERVICE_USER}
-    password: ${env.CONFIG_SERVICE_PASSWORD}
+    host: localhost
+    port: 8888
+    user: blabla-user
+    password: blabla-password
 
 spring:
   application:
@@ -27,6 +27,9 @@ spring:
   config:
     activate:
       on-profile: prod
+  cloud:
+    config:
+      uri: https://blablaconfig.azurewebsites.net
 
 server.port: 8080
 
