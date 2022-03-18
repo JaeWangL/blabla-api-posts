@@ -1,3 +1,13 @@
+bootJar {
+    destinationDirectory.set(file("$projectDir"))
+    archiveFileName = "app.jar"
+}
+
+azurewebapp {
+    resourceGroup = 'smartgeo-test'
+    appName = 'BlaBlaPosts'
+}
+
 dependencies {
     implementation project(path: ":posts-common")
 
