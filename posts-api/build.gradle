@@ -24,9 +24,9 @@ jib {
     container {
         mainClass='com.blabla.posts.api.PostsApiApplication'
         creationTime='USE_CURRENT_TIMESTAMP'
-        jvmFlags = ['-Dspring.profiles.active=prod', '-Dserver.port=8080', '-Dfile.encoding=UTF-8']
+        environment=[USE_PROFILE: 'prod', PORT: '8080']
+        jvmFlags = ['-Dspring.profiles.active=${USE_PROFILE}', '-Dserver.port=${PORT}', '-Dfile.encoding=UTF-8']
         ports = ['8080']
-        entrypoint=['java', '-jar', '/app.jar']
         labels = [maintainer: "JaeWang Lee <jnso5072@outlook.kr>"]
     }
 }
