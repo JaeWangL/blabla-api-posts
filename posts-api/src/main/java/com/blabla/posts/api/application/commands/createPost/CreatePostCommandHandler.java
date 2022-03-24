@@ -65,8 +65,8 @@ public class CreatePostCommandHandler implements Command.Handler<CreatePostComma
 
     private Post createPost(WriterId writerId, CreatePostCommand command) {
         // NOTE: default thumbnail
-        String thumbnailDomain = "https://cheongmac.blob.core.windows.net/gallery/";
-        String thumbnailBlobFileName = "artist_1.png";
+        String thumbnailDomain = "https://smartgeo.blob.core.windows.net/blabla-thumbnail-image/";
+        String thumbnailBlobFileName = "placeholder_thumbnail.png";
         if (command.thumbnailUrl() != null && command.thumbnailUrl().matches("^(http?|https)://.*$")) {
             thumbnailDomain = FilenameUtils.getPath(command.thumbnailUrl());
             thumbnailBlobFileName = FilenameUtils.getName(command.thumbnailUrl());
