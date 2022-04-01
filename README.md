@@ -1,7 +1,6 @@
 # BlaBla Posts API
 
-BlaBla is location-based social media service. This release intends to share a simplified version of Expo apps and Microservice architecture
-This repository contains microservice for Posts with Spring Cloud and DDD. Also, MySQL is used for database and Jit is used for docker
+BlaBla is location-based social media service. This release intends to share a simplified version of Expo apps and Microservice architecture. This repository contains microservice for Posts with Spring Cloud and DDD. Also, MySQL is used for database and Jit is used for docker
 
 # BlaBla Repos
 
